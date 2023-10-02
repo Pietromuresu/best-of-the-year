@@ -7,6 +7,8 @@ import org.java.classes.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @Controller
 public class MainController {
@@ -29,7 +31,7 @@ public class MainController {
 		StringBuilder songsString = new StringBuilder();
 		
 		for(Song song : songs) {
-			songsString.append(song.getTitle() + (song.equals(songs.get(songs.size() - 1)) ? " " : ",  "));
+			songsString.append(song + (song.equals(songs.get(songs.size() - 1)) ? " " : ",  "));
 		}
 		
 		model.addAttribute("songs", songsString);
@@ -44,7 +46,7 @@ public class MainController {
 		StringBuilder moviesString = new StringBuilder();
 		
 		for(Movie movie: movies) {
-			moviesString.append(movie.getTitle() + (movie.equals(movies.get(movies.size() - 1)) ? " " : ",  "));
+			moviesString.append(movie + (movie.equals(movies.get(movies.size() - 1)) ? " " : ",  "));
 		}
 		
 		model.addAttribute("movies", moviesString);
@@ -55,9 +57,33 @@ public class MainController {
 	
 	// --------------------------------------
 	
+	// Get details of a media
 	
+	@GetMapping("/movies/{id}")
+	public String getMoviebById(@PathVariable int id , Model model) {
+		ArrayList<Movie> movies = getBestMovies();
+		
+		String movie = movies.get(id-1).getTitle();
+		model.addAttribute("result", movie);
+		
+		return "mediaDetail";
+		
+		
+	}
 	
+	@GetMapping("/songs/{id}")
+	public String getSongbById(@PathVariable int id , Model model) {
+		ArrayList<Song> songs = getBestSongs();
+		
+		String song = songs.get(id-1).getTitle();
+		model.addAttribute("result", song);
+		
+		return "mediaDetail";
+		
+		
+	}
 	
+	// --------------------------------------
 	
 	// Get all Movies and Songs
 	private ArrayList<Movie> getBestMovies(){
@@ -76,7 +102,7 @@ public class MainController {
 		
 		for(int i = 0; i < names.length; i++) {
 			
-			Movie movie = new Movie(i, names[i]);
+			Movie movie = new Movie(i+1, names[i]);
 			
 			bestMovies.add(movie);
 			
@@ -104,7 +130,7 @@ public class MainController {
 		
 		for(int i = 0; i < names.length; i++) {
 			
-			Song song = new Song(i, names[i]);
+			Song song = new Song(i+1, names[i]);
 			
 			bestSongs.add(song);
 			
