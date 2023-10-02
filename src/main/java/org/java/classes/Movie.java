@@ -26,5 +26,10 @@ public class Movie {
 		this.title = title;
 	}
 	
+	@Override
+	public String toString() {
+
+		return "Id: " + id + " | Title: " + title;  
+	}
 	
 }

@@ -21,6 +21,45 @@ public class MainController {
 		return "index";
 	}
 	
+	
+	// See all Movies and Songs
+	@GetMapping("/songs")
+	public String songs(Model model) {
+		ArrayList<Song> songs = getBestSongs();
+		StringBuilder songsString = new StringBuilder();
+		
+		for(Song song : songs) {
+			songsString.append(song.getTitle() + (song.equals(songs.get(songs.size() - 1)) ? " " : ",  "));
+		}
+		
+		model.addAttribute("songs", songsString);
+		
+		return "songs";
+		
+	}
+	
+	@GetMapping("/movies")
+	public String movies(Model model) {
+		ArrayList<Movie> movies = getBestMovies();
+		StringBuilder moviesString = new StringBuilder();
+		
+		for(Movie movie: movies) {
+			moviesString.append(movie.getTitle() + (movie.equals(movies.get(movies.size() - 1)) ? " " : ",  "));
+		}
+		
+		model.addAttribute("movies", moviesString);
+		
+		return "movies";
+		
+	}
+	
+	// --------------------------------------
+	
+	
+	
+	
+	
+	// Get all Movies and Songs
 	private ArrayList<Movie> getBestMovies(){
 		
 		String[] names = {
@@ -32,7 +71,6 @@ public class MainController {
 		                  "Il buco",
 		                  "the next three days",
 		   				 };
-		
 		
 		ArrayList<Movie> bestMovies = new ArrayList<>();
 		
@@ -47,7 +85,8 @@ public class MainController {
 		return bestMovies;
 	}
 	
-		
+	
+	
 	private ArrayList<Song> getBestSongs(){
 			
 		String[] names = {

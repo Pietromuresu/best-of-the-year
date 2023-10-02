@@ -27,4 +27,12 @@ public class Song {
 	}
 	
 	
+	@Override
+	public String toString() {
+
+		return "Id: " + id + " | Title: " + title;  
+	}
+	
+	
+	
 }
